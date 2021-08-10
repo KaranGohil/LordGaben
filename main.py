@@ -48,7 +48,7 @@ async def on_message(message):
     item_name = msg.split("$find ", 1)[1]
     # Calls the function from above
     lowest_price = get_lowest_price(item_name)
-    await message.channel.send("My Guy!" + item_name + lowest_price)
+    await message.channel.send("My Guy! {} is {}".format(item_name, lowest_price))
 
 
 #keep the bot online all the time
