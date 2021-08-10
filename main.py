@@ -3,21 +3,19 @@ import discord
 import requests
 import json
 from keep_alive import keep_alive
+from Script import link_maker
 
 
 # Connection to discord
 client = discord.Client()   
 
 
-def get_quote():
+def get_lowest_price(item_name):
   #use http api to get info online and data is stored in JSON
-  response = requests.get("http://steamcommunity.com/market/priceoverview/?appid=730&currency=20&market_hash_name=Snakebite Case")
+  response = requests.get(link_maker.setlink(item_name))
   #That's why we import json lib
   json_data = json.loads(response.text)
-  print(json_data)
-  # the first part will return the quote and second the author's name
-  #'q' and 'a' are key name and return value
-  quote = json_data['volume'] + " -"+ json_data['lowest_price']
+  quote = json_data['lowest_price']
   return(quote)
 
 
@@ -43,10 +41,14 @@ async def on_message(message):
     #command to show/send the message on discord (channel)
     await message.channel.send('Hello!')
 
-  if msg.startswith('$inspire'):
-    quote = get_quote()
-    await message.channel.send(quote)
-
+  # gives lowest price of the desire item
+  if msg.startswith('$find'):
+    #Take the user input and split the message
+    #For the method we required second element which is item's name
+    item_name = msg.split("$find ", 1)[1]
+    # Calls the function from above
+    lowest_price = get_lowest_price(item_name)
+    await message.channel.send("My Guy!" + item_name + lowest_price)
 
 
 #keep the bot online all the time
