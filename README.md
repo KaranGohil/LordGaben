@@ -12,3 +12,4 @@ LordGaben is a discord bot which helps you track/search price of [Steam market i
 
 ## Python library 
 - [discord](https://pypi.org/project/discord.py/)
+- [Flask](https://pypi.org/project/Flask/)
